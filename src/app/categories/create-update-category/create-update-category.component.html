@@ -1,0 +1,19 @@
+<form [formGroup]="categoryForm">
+
+  <h2>Category details</h2>
+
+  <mat-label>Select parent category</mat-label>
+  <mat-form-field>
+    <mat-select formControlName="parent">
+      <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="name" placeholder="Category name">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="saveCategory()">
+    Save
+  </button>
+</form>

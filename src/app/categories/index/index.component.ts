@@ -4,6 +4,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject, Observable, of as observableOf} from 'rxjs';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {CategoriesService} from '@core/services/categories.service';
+import {Router} from '@angular/router';
 
 /**
  * File node data with nested structure.
@@ -92,49 +93,11 @@ export class FileDatabase {
 
     this.categoriesService.get().subscribe((dt: any) => {
 
-      // Parse the string to json object.
-      // const dataObject = JSON.parse(dt);
-
-      // Build the tree nodes from Json object. The result is a list of `FileNode` with nested
-      //     file node as children.
-      // const data = this.buildFileTree(dt, 0);
-
       // Notify the change.
       this.dataChange.next(dt);
     });
 
 
-  }
-
-  /**
-   * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
-   * The return value is the list of `FileNode`.
-   */
-  buildFileTree(obj: { [key: string]: any }, level: number, parentId: string = '0'): FileNode[] {
-    return Object.keys(obj).reduce<FileNode[]>((accumulator, key, idx) => {
-      const value = obj[key];
-      const node = new FileNode();
-      // console.log(accumulator)
-      node.name = value.name;
-      /**
-       * Make sure your node has an id so we can properly rearrange the tree during drag'n'drop.
-       * By passing parentId to buildFileTree, it constructs a path of indexes which make
-       * it possible find the exact sub-array that the node was grabbed from when dropped.
-       */
-      // node.id = `${parentId}/${idx}`;
-      node.id = value.category_id;
-
-      if (value != null) {
-        if (typeof value === 'object') {
-
-          node.children = this.buildFileTree(value, level + 1, node.id);
-        } else {
-          // node.name = value.name;
-        }
-      }
-      console.log(node);
-      return accumulator.concat(node);
-    }, []);
   }
 }
 
@@ -159,7 +122,8 @@ export class IndexComponent {
 
   constructor(
     database: FileDatabase,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    public router: Router
   ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
       this.isExpandable, this.getChildren);
@@ -244,6 +208,7 @@ export class IndexComponent {
     const siblings = findNodeSiblings(changedData, node.id);
     const siblingIndex = siblings.findIndex(n => n.id === node.id);
     const nodeToInsert: FileNode = siblings.splice(siblingIndex, 1)[0];
+    console.log(changedData);
 
     // determine where to insert the node
     const nodeAtDest = visibleNodes[event.currentIndex];

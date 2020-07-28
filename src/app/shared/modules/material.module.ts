@@ -28,6 +28,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatSidenavModule} from '@angular/material/sidenav';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
@@ -61,6 +62,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatTreeModule,
     MatProgressBarModule,
     MatSelectModule,
+    MatSidenavModule,
     DragDropModule
   ],
   declarations: [],
@@ -96,6 +98,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatTreeModule,
     MatProgressBarModule,
     MatSelectModule,
+    MatSidenavModule,
     DragDropModule
   ]
 })
