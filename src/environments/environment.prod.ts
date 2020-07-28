@@ -1,4 +1,4 @@
 export const environment = {
-  url: '{PRODUCTION_URL}',
+  url: 'https://categories-tree.herokuapp.com/',
   production: true
 };
