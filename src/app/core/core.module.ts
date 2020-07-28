@@ -1,14 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {CategoriesModule} from '../categories/categories.module';
-
+import {ConfirmationDialogComponent} from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import {MaterialModule} from '@shared/modules/material.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ConfirmationDialogComponent],
   imports: [
     CommonModule,
-    CategoriesModule
+    CategoriesModule,
+    MaterialModule
+  ],
+  entryComponents: [
+    ConfirmationDialogComponent
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'categories/save',
     component: CreateUpdateCategoryComponent
+  },
+  {
+    path: 'categories/save/:id',
+    component: CreateUpdateCategoryComponent
   }
 ];
 

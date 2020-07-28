@@ -5,6 +5,8 @@ import {BehaviorSubject, Observable, of as observableOf} from 'rxjs';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {CategoriesService} from '@core/services/categories.service';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationDialogComponent} from '@core/components/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 /**
  * File node data with nested structure.
@@ -123,7 +125,8 @@ export class IndexComponent {
   constructor(
     database: FileDatabase,
     private categoriesService: CategoriesService,
-    public router: Router
+    public router: Router,
+    private dialog: MatDialog
   ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
       this.isExpandable, this.getChildren);
@@ -158,8 +161,6 @@ export class IndexComponent {
         }
       }
     }
-
-    console.log(result);
 
     this.dataSource.data.forEach(node => {
       addExpandedChildren(node, this.expandedNodeSet);
@@ -335,5 +336,16 @@ export class IndexComponent {
       }
     }
     return null;
+  }
+
+  removeCategory(id) {
+    this.dialog.open(ConfirmationDialogComponent, {width: '500px'}).afterClosed().subscribe(result => {
+      if (result) {
+        this.categoriesService.remove({id}).subscribe((dt: any) => {
+          this.dataSource.data = dt;
+        });
+      }
+    })
+    ;
   }
 }
