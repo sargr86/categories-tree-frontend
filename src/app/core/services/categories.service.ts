@@ -14,4 +14,8 @@ export class CategoriesService {
   get() {
     return this.http.get(`${API_URL}categories/get`);
   }
+
+  updateCategoriesOrder(data) {
+    return this.http.put(`${API_URL}categories/update-order`, data);
+  }
 }
