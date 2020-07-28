@@ -6,6 +6,11 @@ import {CreateUpdateCategoryComponent} from '@app/categories/create-update-categ
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'categories',
+    pathMatch: 'full'
+  },
+  {
     path: 'categories',
     component: IndexComponent
   },
