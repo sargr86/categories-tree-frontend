@@ -31,7 +31,7 @@
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>
-        {{node.name}}
+        <span (click)="getDescendantsOfOneParent(node)">{{node.name}}</span>
         <button mat-icon-button (click)="router.navigate(['/categories/save/'+node.id])">
           <mat-icon>edit</mat-icon>
         </button>
@@ -40,5 +40,7 @@
         </button>
       </mat-tree-node>
     </mat-tree>
+
+    <button (click)="getParentOfSelectedParent()" *ngIf="selectedParent">Back</button>
   </div>
 </div>

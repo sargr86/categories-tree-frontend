@@ -11,8 +11,12 @@ export class CategoriesService {
   ) {
   }
 
-  get() {
-    return this.http.get(`${API_URL}categories/get`);
+  get(params) {
+    return this.http.get(`${API_URL}categories/get`, {params});
+  }
+
+  getParentElements(params) {
+    return this.http.get(`${API_URL}categories/get-parent-list`, {params});
   }
 
   getList() {

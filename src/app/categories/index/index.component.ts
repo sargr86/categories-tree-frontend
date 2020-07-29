@@ -94,7 +94,7 @@ export class FileDatabase {
 
   initialize() {
 
-    this.categoriesService.get().subscribe((dt: any) => {
+    this.categoriesService.get({}).subscribe((dt: any) => {
 
       // Notify the change.
       this.dataChange.next(dt);
@@ -122,6 +122,7 @@ export class IndexComponent {
   dragging = false;
   expandTimeout: any;
   expandDelay = 1000;
+  selectedParent;
 
   constructor(
     database: FileDatabase,
@@ -350,5 +351,21 @@ export class IndexComponent {
       }
     })
     ;
+  }
+
+  getDescendantsOfOneParent(node) {
+    this.selectedParent = node.id;
+    this.categoriesService.get({parent: node.id}).subscribe((dt: any) => {
+      this.dataSource.data = dt;
+    });
+  }
+
+  getParentOfSelectedParent() {
+    this.categoriesService.getParentElements({id: this.selectedParent}).subscribe((dt: any) => {
+      this.dataSource.data = dt;
+      if (dt && dt.length > 0) {
+        this.selectedParent = dt[0].parent;
+      }
+    });
   }
 }
