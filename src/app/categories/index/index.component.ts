@@ -7,6 +7,7 @@ import {CategoriesService} from '@core/services/categories.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '@core/components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import {ToastrService} from 'ngx-toastr';
 
 /**
  * File node data with nested structure.
@@ -125,6 +126,7 @@ export class IndexComponent {
   constructor(
     database: FileDatabase,
     private categoriesService: CategoriesService,
+    private toastr: ToastrService,
     public router: Router,
     private dialog: MatDialog
   ) {
@@ -343,6 +345,7 @@ export class IndexComponent {
       if (result) {
         this.categoriesService.remove({id}).subscribe((dt: any) => {
           this.dataSource.data = dt;
+          this.toastr.success('The category has been removed successfully');
         });
       }
     })

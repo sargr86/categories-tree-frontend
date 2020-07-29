@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CategoriesService} from '@core/services/categories.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-update-category',
@@ -18,7 +19,8 @@ export class CreateUpdateCategoryComponent implements OnInit {
     private categoriesService: CategoriesService,
     private fb: FormBuilder,
     public router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.categoryForm = this.fb.group({
       parent: [''],
@@ -47,11 +49,13 @@ export class CreateUpdateCategoryComponent implements OnInit {
   saveCategory() {
     if (this.editCase) {
       this.categoriesService.update(this.categoryForm.value).subscribe(() => {
+        this.toastr.success('The category details have been updated successfully');
         this.router.navigate(['categories']).then(r => r);
       });
     } else {
 
       this.categoriesService.add(this.categoryForm.value).subscribe(() => {
+        this.toastr.success('The category has been added successfully');
         this.router.navigate(['categories']).then(r => r);
       });
     }
